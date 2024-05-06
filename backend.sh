@@ -47,6 +47,20 @@ validate $? "Unzipping the code"
 
 npm install
 validate $? "Installing nodejs dependencies"
-vim /etc/systemd/system/backend.service #Setup SystemD Expense Backend Service
+
+cp /home/ec2-user/expenses-with-shell/backend.service /etc/systemd/system/backend.service
+validate $? "Copied backend service"
+
+systemctl daemon-reload
+systemctl start backend
+systemctl enable backend
+
+dnf install mysql -y
+validate $? "Installing mysql client"
+
+mysql -h <db.deveops4srav.online> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+validate $? "Loading the schema"
+
+systemctl restart backend
 
 
