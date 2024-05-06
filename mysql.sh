@@ -4,7 +4,8 @@ scriptname=$( echo $0 | cut -d "." -f1) #it cuts the .sh from script name
 logfile=/tmp/$scriptname.$Time.log
 R="\e[31m"
 G="\e[32m"
-
+echo "Please enter DB password:"
+read -s mysql_root_password #if u dont want anyone to see ur pwd
 user=$(id -u)
 validate()
 {
@@ -34,5 +35,13 @@ validate()
     systemctl start mysqld &>>logfile
     validate $? "Starting mqsql server"
 
-    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>logfile
-    validate $? "Changing the root password"
+   # mysql_secure_installation --set-root-pass ExpenseApp@1 &>>logfile
+   # validate $? "Changing the root password"
+#Below command is useful for idempotent nature
+    mysql -h db.devops4srav.online -uroot -p${mysql_root_password} -e 'show databases;' &>>logfile
+if [ $? -ne 0 ]
+mysql_secure_installation --set-root-pass ${mysql_root_password} &>>logfile
+validate $? "mysql root password set"
+else
+echo -e "mysql root password already set"
+fi
