@@ -4,8 +4,7 @@ scriptname=$( echo $0 | cut -d "." -f1) #it cuts the .sh from script name
 logfile=/tmp/$scriptname.$Time.log
 R="\e[31m"
 G="\e[32m"
-echo "Please enter DB password:"
-read -s mysql_root_password #if u dont want anyone to see ur pwd
+mysql_root_password=ExpenseApp@1 #if u dont want anyone to see ur pwd
 user=$(id -u)
 validate()
 {
