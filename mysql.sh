@@ -40,6 +40,7 @@ validate()
 #Below command is useful for idempotent nature
     mysql -h db.devops4srav.online -uroot -p${mysql_root_password} -e 'show databases;' &>>logfile
 if [ $? -ne 0 ]
+then
 mysql_secure_installation --set-root-pass ${mysql_root_password} &>>logfile
 validate $? "mysql root password set"
 else
