@@ -45,7 +45,7 @@ cd /app
 
 unzip /tmp/backend.zip
 validate $? "Unzipping the code"
-
+cd /app
 npm install
 validate $? "Installing nodejs dependencies"
 
@@ -59,7 +59,7 @@ systemctl enable backend
 dnf install mysql -y
 validate $? "Installing mysql client"
 
-mysql -h db.deveops4srav.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h db.devops4srav.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 validate $? "Loading the schema"
 
 systemctl restart backend
