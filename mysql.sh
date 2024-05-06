@@ -17,7 +17,7 @@ validate()
     fi
 
 }
-    if [ $? -ne 0 ]
+    if [ $user -ne 0 ]
     then
     echo "Please run with root access"
     exit 1
