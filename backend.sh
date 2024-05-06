@@ -34,14 +34,15 @@ validate()
     validate $? "installing nodejs 20 version"
 
     id expense &>/dev/null || useradd expense #it will create user expense/if already exits then it will exit
-
- mkdir -p /add
+rm -rf /app
+ mkdir -p /app
 validate $? "creating add directory"
 
  curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip   
 validate $? "Downloading backend code"
 
 cd /app
+
 unzip /tmp/backend.zip
 validate $? "Unzipping the code"
 
@@ -58,7 +59,7 @@ systemctl enable backend
 dnf install mysql -y
 validate $? "Installing mysql client"
 
-mysql -h <db.deveops4srav.online> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h db.deveops4srav.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 validate $? "Loading the schema"
 
 systemctl restart backend
