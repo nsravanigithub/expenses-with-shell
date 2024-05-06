@@ -5,6 +5,8 @@ logfile=/tmp/$scriptname.$Time.log
 R="\e[31m"
 G="\e[32m"
 mysql_root_password=ExpenseApp@1 #if u dont want anyone to see ur pwd
+echo "Enter your DB password"
+read -s "mysql_root_password"
 user=$(id -u)
 validate()
 {
@@ -37,7 +39,7 @@ validate()
    # mysql_secure_installation --set-root-pass ExpenseApp@1 &>>logfile
    # validate $? "Changing the root password"
 #Below command is useful for idempotent nature
-    mysql -h db.devops4srav.online -uroot -p${mysql_root_password} -e 'show databases;' &>>logfile
+mysql -h db.devops4srav.online -uroot -p${mysql_root_password} -e 'show databases;' &>>logfile
 if [ $? -ne 0 ]
 then
 mysql_secure_installation --set-root-pass ${mysql_root_password} &>>logfile
